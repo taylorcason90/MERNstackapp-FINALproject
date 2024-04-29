@@ -1,13 +1,13 @@
+// client/src/components/Home.js
+
 import React from 'react';
 
- function Home() {
+function Home() {
   return (
-    <>
     <div>
       <h1>Welcome to the Social Media App</h1>
       <p>This is the home page.</p>
     </div>
-    </>
   );
 }
 
