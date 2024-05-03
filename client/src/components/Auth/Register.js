@@ -1,5 +1,3 @@
-// client/src/components/Auth/Register.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -11,15 +9,21 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/auth/register', {
+      const response = await axios.post('/api/auth/register', {
         username,
         email,
         password
       });
-      console.log('Registration successful!');
-      // Handle successful registration (e.g., show success message, redirect user)
+
+      // Check if registration was successful
+      if (response.status === 201) {
+        const userData = response.data; // Assuming response contains user data
+        console.log('Registration successful:', userData);
+      } else {
+        console.error('Registration failed:', response.data.error);
+      }
     } catch (error) {
-      console.error('Registration failed:', error);
+      console.error('Registration error:', error.message);
     }
   };
 
@@ -48,7 +52,7 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit" className="register-button">Register</button>
       </form>
     </div>
   );

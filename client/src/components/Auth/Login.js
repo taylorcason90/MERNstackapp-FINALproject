@@ -1,5 +1,3 @@
-// client/src/components/Auth/Login.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -10,9 +8,11 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/auth/login', { email, password });
+      const response = await axios.post('/api/auth/login', { email, password });
+      const token = response.data.token;
+      // Use the token (e.g., save it to localStorage for authenticated requests)
+      localStorage.setItem('token', token); // Example: Save token to localStorage
       console.log('Login successful!');
-      // Handle successful login (e.g., save token to localStorage, redirect user)
     } catch (error) {
       console.error('Login failed:', error);
     }
@@ -36,7 +36,7 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit" className="login-button">Login</button>
       </form>
     </div>
   );

@@ -1,9 +1,8 @@
-/* client/src/App.css */
-
 .App {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  
 }
 
 form {
@@ -30,4 +29,63 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.login-button,
+.register-button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #f9f9f7;
+  border: none;
+  cursor: pointer;
+  /* Add additional styling as needed */
+}
+
+.login-button:hover,
+.register-button:hover {
+  background-color: #0056b3;
+  /* Add hover effects */
+}
+
+/* nav buttons  */
+div .hmpgbtn {
+  background-color: rgb(124, 146, 248);
+  border: solid;
+  display: inline;
+  border-radius: 5px;
+  float: center;
+  margin-right: 120px;
+  margin-left: 70px;
+  margin-top: 30px;
+  align-items: center;
+}
+/* nav font changes  */
+.link {
+  color: #fefdfc; /* Default link color */
+  text-align: center;
+  text-decoration: none; /* Remove underline */
+}
+
+.link:hover {
+  color: #0056b3; /* Hover color */
+  text-decoration: underline; /* Underline on hover */
+}
+
+.hmpg {
+  margin-top: 75px;
+  text-align: center;
+}
+
+/* welcome message home page  */
+.welcome {
+  text-align: center;
+  margin-top: 100px;
+}
+
+/* home image  */
+.fetchimage {
+  margin-top: 30px;
+  margin-left: 80px;
+  height: 500px;
 }
