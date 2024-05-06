@@ -89,3 +89,8 @@ div .hmpgbtn {
   margin-left: 80px;
   height: 500px;
 }
+
+.td {
+  display: table-cell;
+  vertical-align: middle;
+}

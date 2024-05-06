@@ -12,16 +12,14 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* Define routes for different components */}
+      
         <Routes>
           <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
           {/* Pass setIsLoggedIn function to Login component */}
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/register" element={<Register />} />
+          {isLoggedIn && <Route path="/user-profile" element={<UserProfile/>}/>}
         </Routes>
-
-        {/* Conditionally render UserProfile component based on isLoggedIn state */}
-        {isLoggedIn && <UserProfile />}
       </div>
     </Router>
   );

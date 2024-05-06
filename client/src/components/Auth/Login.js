@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({setIsLoggedIn}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const apiUrl = 'http://localhost:6000/api/auth/login';
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
-      const token = response.data.token;
-      // Use the token (e.g., save it to localStorage for authenticated requests)
-      localStorage.setItem('token', token); // Example: Save token to localStorage
-      console.log('Login successful!');
+      const response = await axios.post(apiUrl, { email, password });
+
+      if (response.status === 200) {
+        const { token } = response.data; //
+        console.log('Received token', token); 
+        localStorage.setItem('token', token);
+        setIsLoggedIn(true);
+        console.log('Login successful!');
+        navigate(`/user-profile`); // Redirect to user's profile page
+      } else {
+        console.error('Login failed:', response.data.error);
+      }
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('Login error:', error);
     }
   };
 
@@ -36,7 +47,7 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="login-button">Login</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
