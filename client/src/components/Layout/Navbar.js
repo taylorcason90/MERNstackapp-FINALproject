@@ -3,13 +3,21 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <nav className="nav">
-      
-      <h1><b>MetLink</b></h1>
-      <div>
-        <button type="button" className="hmpgbtn"><Link to="/" className="link">Home</Link></button>
-       <button type="button" className="hmpgbtn"><Link to="/login" className="link">Login</Link></button>
-        <button type="button" className="hmpgbtn"><Link to="/register" className="link">Register</Link></button>
+    <nav className="navbar">
+      <div className="navbar-container">
+        <div className="logo">
+          <Link to="/">MetLink</Link>
+        </div>
+        
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/register">Register</Link></li>
+        </ul>
+        <div className="search-bar">
+          <input type="text" placeholder="Search..." />
+          {/* Add search button if needed */}
+        </div>
       </div>
     </nav>
   );
