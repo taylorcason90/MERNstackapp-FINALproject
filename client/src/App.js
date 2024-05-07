@@ -18,7 +18,7 @@ function App() {
           {/* Pass setIsLoggedIn function to Login component */}
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/register" element={<Register />} />
-          {isLoggedIn && <Route path="/user-profile" element={<UserProfile/>}/>}
+          {isLoggedIn && <Route path="/userprofile" element={<UserProfile/>}/>}
         </Routes>
       </div>
     </Router>

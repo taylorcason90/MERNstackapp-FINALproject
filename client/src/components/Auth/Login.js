@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function Login({setIsLoggedIn}) {
+function Login({ setIsLoggedIn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const apiUrl = 'http://localhost:6000/api/auth/login';
+  const apiUrl = 'http://localhost:4000/api/auth/login';
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,12 +15,12 @@ function Login({setIsLoggedIn}) {
       const response = await axios.post(apiUrl, { email, password });
 
       if (response.status === 200) {
-        const { token } = response.data; //
-        console.log('Received token', token); 
+        const { token } = response.data;
+        console.log('Received token', token);
         localStorage.setItem('token', token);
         setIsLoggedIn(true);
         console.log('Login successful!');
-        navigate(`/user-profile`); // Redirect to user's profile page
+        navigate(`/userprofile`); // Redirect to user's profile page after login
       } else {
         console.error('Login failed:', response.data.error);
       }
