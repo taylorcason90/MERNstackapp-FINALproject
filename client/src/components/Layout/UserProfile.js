@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import SidebarLeft from './SidebarLeft.js';
-import SidebarRight from './SidebarRight.js'
-import Post from '../Post.js';
-import '../../App.js'
+import SidebarLeft from './SidebarLeft';
+import SidebarRight from './SidebarRight';
+import Post from '../Post';
 
 function UserProfile() {
   const token = localStorage.getItem('token');
   const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [isPostShared, setIsPostShared] = useState(false); // State to track shared posts
+  const [posts, setPosts] = useState([]);
+  const [newPostContent, setNewPostContent] = useState('');
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -26,69 +26,74 @@ function UserProfile() {
         setLoading(false);
       }
     };
+
     if (token) {
       fetchUserProfile();
     }
   }, [token]);
 
-  const handleSharePost = () => {
-    setIsPostShared(true); // Update state to indicate that a post has been shared
-    // Additional logic for handling shared posts
+  const handleSharePost = async () => {
+    try {
+      // Assuming there's an API endpoint to create a new post
+      const response = await axios.post(
+        'http://localhost:4000/api/posts',
+        { content: newPostContent },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // Update posts state with the new post
+      setPosts([...posts, response.data]);
+      // Clear input field after posting
+      setNewPostContent('');
+    } catch (error) {
+      console.error('Error sharing post:', error);
+    }
   };
-
-  // Mock posts data for demonstration
-  const posts = [
-    {
-      id: 1,
-      username: 'taylor c',
-      content: 'Laughter is the way to go!',
-      imageUrl: 'https://via.placeholder.com/150',
-    },
-    {
-      id: 2,
-      username: 'taylor c',
-      content: 'I love social media',
-      imageUrl: 'https://via.placeholder.com/150',
-    },
-  ];
 
   return (
     <div className="user-profile-container">
-      {/* <h1>My Profile</h1> */}
-      <div className="profile-details">
       <div className="left-sidebar">
-              <SidebarLeft />
-            </div>
-            <div className="user-main-content"></div>
+        <SidebarLeft />
+      </div>
+      <div className="profile-details">
         {loading ? (
           <p>Loading user profile...</p>
         ) : userProfile ? (
           <>
-           
-            
-              <p>Username: {userProfile.username}</p>
-              <p>Email: {userProfile.email}</p>
-              {/* Additional user details can be displayed here */}
+            <p>Username: {userProfile.username}</p>
+            <p>Email: {userProfile.email}</p>
 
-              {/* Display user's posts */}
-              {posts.map((post) => (
-                <Post
-                  key={post.id}
-                  username={post.username}
-                  content={post.content}
-                  imageUrl={post.imageUrl}
-                  onSharePost={handleSharePost} // Pass the share handler callback
-                  isShared={isPostShared} // Pass the shared state to the Post component
-                />
-              ))}
+            {/* User Post Creation */}
+            <div className="post-create-section">
+              <textarea
+                value={newPostContent}
+                onChange={(e) => setNewPostContent(e.target.value)}
+                placeholder="What's on your mind?"
+                rows={3}
+              />
+              <button onClick={handleSharePost}>Share</button>
+            </div>
+
+            {/* Display user's posts */}
+            {posts.map((post) => (
+              <Post
+                key={post.id}
+                username={post.username}
+                content={post.content}
+                imageUrl={post.imageUrl}
+              />
+            ))}
           </>
         ) : (
           <p>No user profile found.</p>
         )}
       </div>
       <div className="right-sidebar">
-              <SidebarRight />
-            </div>
+        <SidebarRight />
+      </div>
     </div>
   );
 }

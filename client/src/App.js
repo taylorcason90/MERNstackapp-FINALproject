@@ -5,6 +5,8 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import UserProfile from './components/Layout/UserProfile';
 import NewsFeed from './components/Layout/NewsFeed'; // Import NewsFeed component
+import Navbar from './components/Layout/Navbar'; // Import Navbar component
+import './App.css'; // Import CSS file
 
 function App() {
   // State to track whether the user is logged in or not
@@ -13,9 +15,9 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Navbar /> {/* Render Navbar component */}
         <Routes>
           <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
-          {/* Pass setIsLoggedIn function to Login component */}
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/register" element={<Register />} />
           {/* UserProfile and NewsFeed accessible only when logged in */}

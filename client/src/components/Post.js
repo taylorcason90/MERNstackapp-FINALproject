@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 
-function Post({ username, content, imageUrl, onSharePost, isShared }) {
+function Post({ id, username, content, imageUrl, onSharePost, isShared }) {
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
 
   const handleLike = () => {
-    if (!isLiked) {
-      setLikes(likes + 1);
-      setIsLiked(true);
-    } else {
-      setLikes(likes - 1);
-      setIsLiked(false);
-    }
+    setLikes((prevLikes) => (isLiked ? prevLikes - 1 : prevLikes + 1));
+    setIsLiked((prevIsLiked) => !prevIsLiked);
   };
 
   const handleShare = () => {
@@ -30,7 +25,7 @@ function Post({ username, content, imageUrl, onSharePost, isShared }) {
     if (commentInput.trim() !== '') {
       const newComment = {
         id: comments.length + 1,
-        username: username, // Assuming `username` is a string
+        username: username,
         text: commentInput,
       };
       setComments([...comments, newComment]);

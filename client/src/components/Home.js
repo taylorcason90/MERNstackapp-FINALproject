@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from './Layout/Navbar';
+// import Navbar from './Layout/Navbar'; // Import the correct Navbar component
 import axios from 'axios';
 import '../../src/App.css';
 
-function Home() {
+function Home({ isLoggedIn }) {
   const [image, setImage] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(
-          'https://api.pexels.com/v1/search?query=technology&per_page=1', // New search query for technology-related image
+          'https://api.pexels.com/v1/search?query=technology&per_page=1',
           {
             headers: {
-              Authorization: 'Bearer YOUR_API_KEY_HERE', // Replace YOUR_API_KEY_HERE with your Pexels API key
+              Authorization: 'Te2AxJtvuJZTZLxU21ZBZiZ0jEFAaZiQ0QzjK2YzqbF4Ui2XghQzwO7B',
             },
           }
         );
@@ -29,14 +28,9 @@ function Home() {
     fetchImage();
   }, []);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
-  }, []);
-
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> Render the correct Navbar component */}
       <div className="home-container">
         <div className="main-content">
           <h1 className="title">Welcome to MetLink</h1>
@@ -47,9 +41,8 @@ function Home() {
               className="main-image"
             />
           )}
-          {!isAuthenticated && (
+          {!isLoggedIn && (
             <div className="welcome-section">
-              {/* <h2 className="welcome">Welcome to our MetaLink App!</h2> */}
               <p className="create">Create your account now!</p>
             </div>
           )}
